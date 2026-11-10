@@ -1,0 +1,38 @@
+/* Clean white theme: white background, black text and buttons, red for promotions and sale prices. */
+:root{
+--bg:#ffffff;
+--bg2:#ffffff;
+--fg:#111111;
+--muted:#6b6b6b;
+--brandc:#111111;
+--brand-ink:#ffffff;
+--sale:#d71920;
+--danger:#d71920;
+--line:#dcdcdc;
+--shadow:none;
+color-scheme:light;
+}
+html,body{background:#fff;color:var(--fg)}
+header{background:#fff;border-bottom:1px solid var(--line);box-shadow:none}
+.chip{background:#fff;color:var(--fg);border:1px solid #bdbdbd;border-radius:4px}
+.chip[aria-pressed="true"]{background:#111;color:#fff;border-color:#111}
+.chips.sub .chip[aria-pressed="true"]{background:#fff;color:#111;border:2px solid #111}
+.card{background:#fff;border:1px solid var(--line);box-shadow:none}
+.card.picked{border-color:#111;box-shadow:0 0 0 1px #111}
+.pic{background:#fff}
+.plus,.copy,.fmain,.count,.counter{background:#111;color:#fff}
+.name,.pname,.relhead,.cname{color:#111}
+.price .now,.grandrow strong{color:#111}
+.price:has(.was) .now{color:var(--sale)}
+.off{background:var(--sale);color:#fff}
+.clogo{background:#111;color:#fff}
+.cpanel,.section,.pinfo,.sheet{background:#fff;border:1px solid var(--line)}
+.btext{background:linear-gradient(120deg,#e3262d,#a50f15)!important;color:#fff;border:0}
+.btext strong{color:#fff}
+.bbadge{background:rgba(255,255,255,.22);color:#fff}
+.bcta{background:#fff;color:#c4161c!important}
+.ghost{border-color:#111;color:#111}
+.toast{background:#111;color:#fff}
+.fallbar{background:#fff;border-top:1px solid var(--line);box-shadow:none}
+input,textarea,select{background:#fff;color:#111;border:1px solid #bdbdbd}
+.paycard.on{background:#fff;border-color:#111;box-shadow:0 0 0 1px #111}
