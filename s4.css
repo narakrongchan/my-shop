@@ -1,0 +1,15 @@
+/* Promotion poster slider */
+.banners{margin:0 0 14px}
+.btrack{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;border-radius:14px}
+.btrack::-webkit-scrollbar{display:none}
+.bslide{position:relative;flex:0 0 100%;scroll-snap-align:center;aspect-ratio:2.2/1;border:0;padding:0;border-radius:14px;overflow:hidden;background:var(--bg2);cursor:pointer;text-align:left;color:#fff}
+.bslide img{display:block;width:100%;height:100%;object-fit:cover}
+.btext{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:6px;padding:16px 40% 16px 18px;background:linear-gradient(120deg,var(--bc),color-mix(in srgb,var(--bc) 55%,#000))}
+.btext strong{font-size:20px;line-height:1.15;text-wrap:balance}
+.bsub{font-size:13.5px;opacity:.92;line-height:1.35}
+.bbadge{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:rgba(255,255,255,.22)}
+.bcta{margin-top:4px;font-size:13px;font-weight:700;padding:6px 12px;border-radius:999px;background:#fff;color:var(--bc)}
+.bemoji{position:absolute;right:6%;top:50%;transform:translateY(-50%) rotate(-8deg);font-size:min(22vw,96px);line-height:1;filter:drop-shadow(0 6px 12px rgba(0,0,0,.25))}
+.bdots{display:flex;justify-content:center;gap:6px;margin-top:8px}
+.bdot{width:6px;height:6px;border-radius:3px;background:color-mix(in srgb,var(--muted) 45%,transparent);transition:width .2s}
+.bdot.on{width:18px;background:var(--brandc)}
