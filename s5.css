@@ -1,0 +1,15 @@
+/* Company header and contact panel */
+.chead{display:flex;align-items:center;gap:10px;min-width:0;white-space:normal!important}
+.clogo{flex:none;width:42px;height:42px;border-radius:12px;overflow:hidden;display:grid;place-items:center;background:var(--brandc);color:var(--brand-ink);font-size:20px;font-weight:800}
+.clogo img{width:100%;height:100%;object-fit:cover;background:#fff}
+.ctxt{display:flex;flex-direction:column;min-width:0;line-height:1.2}
+.cname{font-size:17px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ctag{font-size:12.5px;font-weight:500;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cinfo{flex:none;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--brandc);background:transparent;color:var(--brandc);font:italic 700 13px/1 Georgia,serif;display:grid;place-items:center}
+.cinfo[aria-expanded="true"]{background:var(--brandc);color:var(--brand-ink)}
+.cpanel{margin:0 0 10px;padding:4px 12px;border-radius:12px;background:var(--bg2)}
+.crow{display:flex;align-items:center;gap:10px;padding:9px 0;font-size:14px;color:var(--fg);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--muted) 16%,transparent)}
+.crow:last-child{border-bottom:0}
+.crow span:nth-child(2){flex:1;min-width:0;overflow-wrap:anywhere}
+.cicon{flex:none;width:22px;text-align:center}
+.cgo{color:var(--brandc);font-size:18px;line-height:1}
