@@ -73,6 +73,6 @@ const list = shop.products.filter(p =>
 (cat === "All" || p.category === cat) &&
 (sub === "All" || p.subcategory === sub) &&
 (brand === "All" || p.brand === brand));
-if (!list.length){ grid.appendChild(el("div", "empty", "No products match these filters yet.")); return; }
+if (!list.length){ grid.appendChild(el("div", "empty", "No products here yet.")); return; }
 list.forEach(p => grid.appendChild(cardFor(p)));
 }
