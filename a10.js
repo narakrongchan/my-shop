@@ -5,6 +5,7 @@ tg: '<path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/>',
 fb: '<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>',
 pin: '<path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>',
 clock: '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+tiktok: '<path d="M9 12a4 4 0 1 0 4 4V3c.5 2.5 2.5 4.5 6 5"/>',
 info: '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>'
 };
 function icon(name){
@@ -17,12 +18,13 @@ function renderContactCard(){
 document.querySelectorAll(".cinfo, #companyInfo").forEach(n => n.remove());
 const c = shop.company; if (!c) return;
 const items = [];
-const tgName = (c.telegram || "").replace(/^@/, "");
-if (c.phone) items.push(["phone", "Call us", c.phone, "tel:" + c.phone.replace(/[^\d+]/g, "")]);
-if (tgName) items.push(["tg", "Telegram", "@" + tgName, "https://t.me/" + tgName]);
+for (const p of phonesOf(c)) items.push(["phone", p.label ? "Call · " + p.label : "Call us", p.number, telHref(p.number)]);
+for (const t of tgsOf(c)) items.push(["tg", t.label ? "Telegram · " + t.label : "Telegram", "@" + tgUser(t), "https://t.me/" + tgUser(t)]);
 if (c.facebook) items.push(["fb", "Facebook", "Visit our page", c.facebook]);
+const tt = (c.tiktok || "").trim();
+if (tt){ const ttName = tt.replace(/^https?:\/\/(www\.)?tiktok\.com\//, "").replace(/^@/, "").split(/[/?]/)[0]; items.push(["tiktok", "TikTok", "@" + ttName, "https://www.tiktok.com/@" + ttName]); }
 if (c.hours) items.push(["clock", "Opening hours", c.hours, ""]);
-if (c.address) items.push(["pin", "Find us", c.address, c.map || "", "wide"]);
+if (c.address) items.push(["pin", c.map ? "Find us · Open in Google Maps ›" : "Find us", c.address, c.map || "", "wide"]);
 if (c.about) items.push(["info", "About us", c.about, "", "wide"]);
 if (!items.length) return;
 const halves = items.filter(i => !i[4]);

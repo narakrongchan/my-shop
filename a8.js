@@ -20,8 +20,8 @@ if (c.tagline) txt.appendChild(el("span", "ctag", c.tagline));
 h1.append(logo, txt);
 
 const rows = [];
-if (c.phone) rows.push(["📞", c.phone, "tel:" + c.phone.replace(/[^\d+]/g, "")]);
-if (c.telegram) rows.push(["💬", "@" + c.telegram.replace(/^@/, ""), "https://t.me/" + c.telegram.replace(/^@/, "")]);
+for (const p of phonesOf(c)) rows.push(["📞", (p.label ? p.label + ": " : "") + p.number, telHref(p.number)]);
+for (const t of tgsOf(c)) rows.push(["💬", (t.label ? t.label + ": " : "") + "@" + tgUser(t), "https://t.me/" + tgUser(t)]);
 if (c.facebook) rows.push(["👍", "Facebook", c.facebook]);
 if (c.address) rows.push(["📍", c.address, c.map || ""]);
 if (c.hours) rows.push(["🕘", c.hours, ""]);

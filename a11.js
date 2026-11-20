@@ -55,7 +55,10 @@ card.appendChild(el("p", "", res.deliveryPending
 : "We'll call you on " + order.phone + " to confirm your delivery."));
 if (res.pay === "transfer" && res.bank){
 card.appendChild(el("pre", "tbank", res.bank));
-const tgName = shop.company && shop.company.telegram ? shop.company.telegram.replace(/^@/, "") : "";
+const tgs = shop.company ? tgsOf(shop.company) : [];
+const cats = (order.items || []).map(i => (product(i[0]) || {}).category);
+const tgPick = tgs.find(t => t.label && cats.includes(t.label)) || tgs[0];
+const tgName = tgPick ? tgUser(tgPick) : "";
 if (tgName){
 const a = el("a", "tlink", "Send the receipt to @" + tgName + " on Telegram");
 a.href = "https://t.me/" + tgName; a.target = "_blank"; a.rel = "noopener";
