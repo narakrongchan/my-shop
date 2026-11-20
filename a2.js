@@ -1,3 +1,4 @@
+const SALE = "🔥 Sale";
 const catName = c => typeof c === "string" ? c : c.name;
 const subsOf = name => {
 const c = (shop.categories || []).find(c => catName(c) === name);
@@ -17,7 +18,9 @@ box.appendChild(b);
 }
 
 function renderChips(){
-chipRow($("chips"), (shop.categories || []).map(catName), cat, "All", v => { cat = v; sub = "All"; renderChips(); renderGrid(); });
+const hasSale = shop.products.some(onSale);
+chipRow($("chips"), [...(hasSale ? [SALE] : []), ...(shop.categories || []).map(catName)], cat, "All", v => { cat = v; sub = "All"; renderChips(); renderGrid(); });
+const sc = [...$("chips").children].find(b => b.textContent === SALE); if (sc) sc.classList.add("sale");
 let sb = $("subchips");
 if (!sb){ sb = el("div", "chips sub"); sb.id = "subchips"; $("chips").after(sb); }
 const subs = cat === "All" ? [] : subsOf(cat);
@@ -70,7 +73,7 @@ return card;
 function renderGrid(){
 const grid = $("grid"); grid.textContent = "";
 const list = shop.products.filter(p =>
-(cat === "All" || p.category === cat) &&
+(cat === "All" || (cat === SALE ? onSale(p) : p.category === cat)) &&
 (sub === "All" || p.subcategory === sub) &&
 (brand === "All" || p.brand === brand));
 if (!list.length){ grid.appendChild(el("div", "empty", "No products here yet.")); return; }

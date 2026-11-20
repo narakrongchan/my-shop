@@ -19,3 +19,6 @@ a.kitem:active{background:#f3f3f3}
 .blogo img{width:100%;height:100%;object-fit:contain;background:#fff}
 .bname{font-size:12px;font-weight:600;line-height:1.2;text-align:center;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 @media (max-width:360px){.kcard{grid-template-columns:1fr}}
+
+.chip.sale{color:#d32f2f;border-color:#d32f2f;font-weight:700}
+.chip.sale[aria-pressed="true"]{background:#d32f2f;color:#fff;border-color:#d32f2f}
