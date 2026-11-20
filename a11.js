@@ -8,13 +8,14 @@ if (!name) return fail("Please enter your name.", "fName");
 if (!/^[+\d][\d\s\-()]{5,}$/.test(phone)) return fail("Please enter a phone number we can call, for example +855 12 345 678.", "fPhone");
 if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fail("That email address doesn't look right. Fix it or leave it empty.", "fEmail");
 if (!address && !loc) return fail("Please enter your delivery address or add your location on the map.", "fAddr");
+if (zone === "prov" && !province) return fail("Please choose your province for delivery.");
 $("formErr").hidden = true;
 try { localStorage.setItem("shop-details", JSON.stringify({ name, phone, email, address })); } catch {}
 return {
 v: 1,
 items: lines().map(l => [l.id, l.qty, l.opts]),
 name: name.slice(0, 80), phone: phone.slice(0, 30), email: email.slice(0, 120),
-address: (address || (loc ? "Pinned on map (" + loc.label + ")" : "")).slice(0, 300),
+address: ("[" + deliveryTag() + "] " + (address || (loc ? "Pinned on map (" + loc.label + ")" : ""))).slice(0, 300),
 note: v("fNote").slice(0, 200), pay: pay === "card" ? "cod" : pay,
 ...(loc ? { loc: { lat: loc.lat, lng: loc.lng, label: loc.label } } : {})
 };

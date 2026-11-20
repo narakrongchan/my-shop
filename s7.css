@@ -62,3 +62,23 @@ a.kitem:active{background:#f3f3f3}
 .btile[aria-pressed="true"] .blogo.haslogo{background:#fff}
 .blogo.haslogo img{object-fit:contain}
 .brandsec{margin:4px 0 14px}
+/* Colored payment and delivery templates */
+.paycard.tpl{position:relative;align-items:center;gap:12px;padding:14px;border:2px solid var(--pc);background:color-mix(in srgb,var(--pc) 7%,#fff);border-radius:14px;min-height:64px;transition:transform .08s}
+.paycard.tpl:active{transform:scale(.98)}
+.paycard.tpl input{position:absolute;opacity:0;pointer-events:none}
+.paycard.tpl .picon{flex:none;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:22px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.paycard.tpl .ptxt{flex:1;min-width:0}
+.paycard.tpl .ptxt strong{display:block;font-size:15.5px;color:var(--pc)}
+.paycard.tpl .ptxt small{color:#555}
+.paycard.tpl .pcheck{flex:none;width:24px;height:24px;border-radius:50%;border:2px solid var(--pc);display:grid;place-items:center;font-size:13px;font-weight:800;color:transparent}
+.paycard.tpl.on{background:linear-gradient(135deg,var(--pc),var(--pc2));border-color:var(--pc);box-shadow:0 4px 14px color-mix(in srgb,var(--pc) 35%,transparent)}
+.paycard.tpl.on .ptxt strong,.paycard.tpl.on .ptxt small{color:#fff}
+.paycard.tpl.on .pcheck{background:#fff;border-color:#fff;color:var(--pc)}
+.pay-transfer{--pc:#1565c0;--pc2:#1e88e5}
+.pay-cod{--pc:#2e7d32;--pc2:#43a047}
+.del-pp{--pc:#6a1b9a;--pc2:#8e24aa}
+.del-prov{--pc:#e65100;--pc2:#fb8c00}
+.paycard.tpl .bank{background:#fff;border-color:#fff;color:#111}
+.paycard.tpl .bank .banknum{color:#444}
+.provsel{flex-basis:100%;min-height:44px;padding:8px 12px;border-radius:10px;border:0;font:inherit;font-size:15px;background:#fff;color:#111}
+.fmain.red{background:#d32f2f!important;color:#fff!important}

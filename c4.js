@@ -6,15 +6,15 @@ const p = product(current);
 if (p && p.inStock){ text = "Add to cart · " + money(unitPrice(p)); show = true; }
 }
 if (view === "checkout"){
-const fixed = typeof shop.deliveryFee === "number";
-text = "Place order · " + money(itemsTotal() + (fixed ? shop.deliveryFee : 0)) + (fixed ? "" : " + delivery"); show = true;
+const df = delFee();
+text = "Place Order · " + money(itemsTotal() + (df || 0)) + (df === null ? " + delivery" : ""); show = true;
 }
 if (inTelegram){
-if (show) tg.MainButton.setParams({ text, is_visible: true, is_active: true }); else tg.MainButton.hide();
+if (show) tg.MainButton.setParams({ text, is_visible: true, is_active: true, color: view === "checkout" ? "#d32f2f" : "#111111" }); else tg.MainButton.hide();
 if (view === "catalog") tg.BackButton.hide(); else tg.BackButton.show();
 } else {
 $("fallbar").hidden = !show && view === "catalog";
-$("fallBtn").hidden = !show; $("fallBtn").textContent = text;
+$("fallBtn").hidden = !show; $("fallBtn").textContent = text; $("fallBtn").classList.toggle("red", view === "checkout");
 $("fallBack").hidden = view === "catalog";
 }
 }
@@ -45,12 +45,13 @@ if (!name) return fail("Please enter your name.", "fName");
 if (!/^[+\d][\d\s\-()]{5,}$/.test(phone)) return fail("Please enter a phone number we can call, for example +855 12 345 678.", "fPhone");
 if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fail("That email address doesn't look right. Fix it or leave it empty.", "fEmail");
 if (!address && !loc) return fail("Please enter your delivery address or add your location on the map.", "fAddr");
+if (zone === "prov" && !province) return fail("Please choose your province for delivery.");
 $("formErr").hidden = true;
 const order = {
 v: 1,
 items: lines().map(l => [l.id, l.qty, l.opts]),
 name: name.slice(0, 80), phone: phone.slice(0, 30), email: email.slice(0, 120),
-address: (address || (loc ? "Pinned on map (" + loc.label + ")" : "")).slice(0, 300),
+address: ("[" + deliveryTag() + "] " + (address || (loc ? "Pinned on map (" + loc.label + ")" : ""))).slice(0, 300),
 note: v("fNote").slice(0, 200), pay,
 ...(loc ? { loc: { lat: loc.lat, lng: loc.lng, label: loc.label } } : {})
 };

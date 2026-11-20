@@ -1,4 +1,28 @@
-let pay = null, loc = null;
+let pay = null, loc = null, zone = "pp", province = "";
+const PROVINCES = ["Banteay Meanchey","Battambang","Kampong Cham","Kampong Chhnang","Kampong Speu","Kampong Thom","Kampot","Kandal","Kep","Koh Kong","Kratie","Mondulkiri","Oddar Meanchey","Pailin","Preah Sihanouk","Preah Vihear","Prey Veng","Pursat","Ratanakiri","Siem Reap","Stung Treng","Svay Rieng","Takeo","Tbong Khmum"];
+const delFee = () => { const d = shop.delivery || {}; const f = zone === "pp" ? d.phnomPenhFee : (d.provinceFees || {})[province]; return typeof f === "number" ? f : null; };
+const deliveryTag = () => zone === "pp" ? "Phnom Penh" : "Province: " + (province || "?");
+function renderDelivery(){
+const box = $("delList"); box.textContent = "";
+const opts = [["pp", "🏙️", "Phnom Penh", "Delivery inside Phnom Penh"], ["prov", "🚚", "Province", "Fee depends on the province"]];
+for (const [v, ic, t, d] of opts){
+const card = el("label", "paycard tpl del-" + v + (zone === v ? " on" : ""));
+const r = el("input"); r.type = "radio"; r.name = "zone"; r.value = v; r.checked = zone === v;
+r.onchange = () => { zone = v; renderCheckout(); };
+const txt = el("div", "ptxt"); txt.append(el("strong", "", t), el("small", "", d));
+card.append(r, el("span", "picon", ic), txt, el("span", "pcheck", "✓"));
+if (v === "prov" && zone === "prov"){
+const sel = el("select", "provsel"); sel.id = "provSel"; sel.setAttribute("aria-label", "Choose your province");
+const o0 = el("option", "", "Choose your province…"); o0.value = ""; sel.appendChild(o0);
+PROVINCES.forEach(p => { const o = el("option", "", p); o.value = p; sel.appendChild(o); });
+sel.value = province;
+sel.onclick = e => e.stopPropagation();
+sel.onchange = () => { province = sel.value; renderCheckout(); };
+card.appendChild(sel);
+}
+box.appendChild(card);
+}
+}
 
 function renderCheckout(){
 const box = $("lines"); box.textContent = "";
@@ -20,9 +44,10 @@ pl.onclick = () => { addToCart(l.id, l.opts, 1); refresh(); };
 q.append(m, n, pl); right.append(del, q);
 row.append(picture(p, "e"), t, right); box.appendChild(row);
 }
-const fixed = typeof shop.deliveryFee === "number", fee = fixed ? shop.deliveryFee : 0, total = itemsTotal();
+renderDelivery();
+const df = delFee(), fixed = df !== null, fee = fixed ? df : 0, total = itemsTotal();
 const sums = $("sums"); sums.textContent = "";
-[["Subtotal (" + count() + ")", money(total)], ["Delivery fee", fixed ? money(fee) : "Depends on location"]].forEach(([k, v]) => {
+[["Subtotal (" + count() + ")", money(total)], ["Delivery (" + deliveryTag() + ")", fixed ? money(fee) : (zone === "pp" ? "We\u2019ll confirm" : "Depends on province")]].forEach(([k, v]) => {
 const r = el("div", "sum"); r.append(el("span", "", k), el("span", "", v)); sums.appendChild(r);
 });
 if (!fixed){
@@ -36,9 +61,8 @@ renderPay();
 
 function payOptions(){
 const list = [];
-if (shop.bank) list.push({ v: "transfer", t: "Direct bank transfer", d: "Pay to our bank account, then send the receipt in chat" });
-else list.push({ v: "transfer", t: "Bank transfer", d: "We send the bank details in chat" });
-list.push({ v: "cod", t: "Cash on delivery", d: "Pay when your order arrives" });
+list.push({ v: "transfer", i: "🏦", t: "Bank Transfer", d: shop.bank ? "Pay to our bank account, then send the receipt" : "We send the bank details in chat" });
+list.push({ v: "cod", i: "💵", t: "Cash on Delivery", d: "Pay in cash when your order arrives" });
 if (cardPayEnabled) list.push({ v: "card", t: "Card in Telegram", d: "Pay securely by card inside Telegram" });
 return list;
 }
@@ -48,11 +72,11 @@ const box = $("payList"); box.textContent = "";
 const opts = payOptions();
 if (!opts.some(o => o.v === pay)) pay = opts[0].v;
 for (const o of opts){
-const card = el("label", "paycard" + (pay === o.v ? " on" : ""));
+const card = el("label", "paycard tpl pay-" + o.v + (pay === o.v ? " on" : ""));
 const r = el("input"); r.type = "radio"; r.name = "pay"; r.value = o.v; r.checked = pay === o.v;
 r.onchange = () => { pay = o.v; renderPay(); };
 const txt = el("div", "ptxt"); txt.append(el("strong", "", o.t), el("small", "", o.d));
-card.append(r, txt);
+card.append(r, el("span", "picon", o.i || "💳"), txt, el("span", "pcheck", "✓"));
 if (o.v === "transfer" && shop.bank && pay === "transfer"){
 const b = shop.bank, acct = el("div", "bank");
 acct.append(el("span", "bankname", b.name || "Bank"));
