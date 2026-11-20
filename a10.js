@@ -58,6 +58,7 @@ for (const b of all){
 if (!b.name) continue;
 const t = el("button", "btile"); t.type = "button"; t.dataset.brand = b.name;
 const logo = el("span", "blogo");
+if (b.logo) logo.classList.add("haslogo");
 if (b.logo){
 const img = el("img"); img.src = b.logo; img.alt = "";
 img.onerror = () => { img.remove(); logo.textContent = b.name.slice(0, 1).toUpperCase(); };
@@ -68,7 +69,7 @@ t.onclick = () => { brand = b.name; const s = $("brandSel"); if (s) s.value = br
 row.appendChild(t);
 }
 wrap.appendChild(row);
-$("grid").before(wrap);
+$("banners").after(wrap);
 }
 function moveCategories(){
 const bar = el("div", "catbar"); bar.style.margin = "2px 0 14px";

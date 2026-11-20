@@ -5,7 +5,7 @@ const subsOf = name => {
 const c = (shop.categories || []).find(c => catName(c) === name);
 return c && Array.isArray(c.subcategories) ? c.subcategories : [];
 };
-const brandsOf = () => shop.brands && shop.brands.length ? shop.brands
+const brandsOf = () => shop.brands && shop.brands.length ? shop.brands.map(b => typeof b === "string" ? b : b.name)
 : [...new Set(shop.products.map(p => p.brand).filter(Boolean))].sort();
 
 function chipRow(box, items, cur, allLabel, pick){
@@ -26,7 +26,7 @@ let sb = $("subchips");
 if (!sb){ sb = el("div", "chips sub"); sb.id = "subchips"; $("chips").after(sb); }
 const subs = cat === "All" ? [] : subsOf(cat);
 sb.hidden = !subs.length;
-if (subs.length) chipRow(sb, subs, sub, "All " + cat, v => { sub = v; renderChips(); renderGrid(); });
+if (subs.length) subTiles(sb, subs);
 const brands = brandsOf();
 let sel = $("brandSel");
 if (!sel && brands.length){
@@ -80,4 +80,23 @@ const list = shop.products.filter(p =>
 (brand === "All" || p.brand === brand));
 if (!list.length){ grid.appendChild(el("div", "empty", "No products here yet.")); return; }
 list.forEach(p => grid.appendChild(cardFor(p)));
+}
+
+function subTiles(box, subs){
+box.textContent = ""; box.className = "subtiles";
+const inCat = shop.products.filter(p => p.category === cat);
+const pick = v => { sub = v; renderChips(); renderGrid(); };
+for (const v of ["All", ...subs]){
+const list = v === "All" ? inCat : inCat.filter(p => p.subcategory === v);
+const b = el("button", "stile"); b.type = "button";
+b.setAttribute("aria-pressed", String(v === sub));
+const pic = el("span", "spic");
+const src = list.map(p => photos(p)[0]).find(Boolean);
+if (v === "All") pic.textContent = "▦";
+else if (src){ const im = el("img"); im.src = src; im.alt = ""; im.loading = "lazy"; pic.appendChild(im); }
+else pic.textContent = (list[0] && list[0].emoji) || "•";
+b.append(pic, el("span", "sname", v === "All" ? "All " + cat : v.replace(/^Outdoor Wearable-/, "")), el("span", "scount", list.length + (list.length === 1 ? " item" : " items")));
+b.onclick = () => pick(v);
+box.appendChild(b);
+}
 }
