@@ -4,18 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <title>Invoice · MY-Shop</title>
 <style>
 :root{--ink:#111;--muted:#555;--line:#9a9a9a}
 *{box-sizing:border-box}
-body{margin:0;background:#efefef;color:var(--ink);font:14px/1.45 ui-monospace,"SF Mono",Menlo,Consolas,"Courier New",monospace;-webkit-font-smoothing:antialiased}
+body{margin:0;background:#efefef;color:var(--ink);font:14px/1.5 "Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
 .wrap{padding:24px 12px 40px;display:flex;flex-direction:column;align-items:center;gap:16px}
 .receipt{position:relative;width:100%;max-width:340px;background:#fff;padding:28px 16px 36px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
 .receipt::after{content:"";position:absolute;left:0;right:0;bottom:-12px;height:12px;background:linear-gradient(-45deg,transparent 8px,#fff 0) 0 0/16px 12px repeat-x,linear-gradient(45deg,transparent 8px,#fff 0) 0 0/16px 12px repeat-x}
 .c{text-align:center}
-.shop{font-size:19px;font-weight:800;letter-spacing:.02em}
+.shop{font-size:22px;font-weight:800;letter-spacing:-.01em}
 .desc{font-size:11.5px;color:var(--muted);margin-top:2px}
-.title{font-size:16px;font-weight:800;margin:16px 0 10px;letter-spacing:.06em}
+.title{display:inline-block;font-size:13px;font-weight:700;margin:14px 0 10px;letter-spacing:.18em;padding:4px 12px;border:1.5px solid #111;border-radius:999px}
 .meta{font-size:12.5px}
 .cust{margin-top:14px;font-size:12.5px}
 .cust div{display:flex;gap:6px}.cust b{flex:none;width:74px;font-weight:600}
@@ -25,18 +27,20 @@ th{text-align:left;font-weight:800;padding:0 0 6px}
 th.n,td.n{text-align:right;white-space:nowrap}
 th.q,td.q{text-align:center;width:36px}
 .item td{padding:2px 0}
-.iname{padding-top:8px!important;word-break:break-word}
-.pn{display:block;font-size:11px;color:var(--muted)}
+.iname{padding-top:8px!important;word-break:break-word;font-weight:700;font-size:13px}
+.pn{display:block;font-size:11px;font-weight:400;color:var(--muted)}
 .sep td{padding:0}.sep hr{border:0;border-top:2px dashed var(--line);margin:6px 0 0}
 .sum{display:flex;justify-content:space-between;font-size:13px;padding:3px 0}
-.total{font-size:16px;font-weight:800;padding:6px 0}
+.sum.disc span:last-child{color:#c62828;font-weight:600}
+.was{display:block;font-size:11px;color:var(--muted);text-decoration:line-through}
+.total{font-size:17px;font-weight:800;padding:6px 0}
 .pay{margin-top:10px;font-size:12.5px}
 .stamp{display:inline-block;margin-top:14px;padding:4px 14px;border:3px solid #1b8a3a;color:#1b8a3a;font-weight:800;font-size:18px;letter-spacing:.12em;transform:rotate(-6deg);border-radius:6px}
 .stamp.unpaid{border-color:#c62828;color:#c62828}
 .thanks{margin-top:22px;font-size:11.5px}
 .btns{display:flex;gap:10px}
-.btns button{font:600 14px system-ui,sans-serif;padding:11px 18px;border-radius:999px;border:0;background:#111;color:#fff}
-.err{max-width:340px;background:#fff;padding:20px;font-family:system-ui,sans-serif;text-align:center}
+.btns button{font:600 14px "Inter",system-ui,sans-serif;padding:11px 18px;border-radius:999px;border:0;background:#111;color:#fff}
+.err{max-width:340px;background:#fff;padding:20px;text-align:center}
 @media print{body{background:#fff}.btns{display:none}.receipt{box-shadow:none}.wrap{padding:0}}
 </style>
 </head>
@@ -45,7 +49,8 @@ th.q,td.q{text-align:center;width:36px}
 <script>
 /* Invoice data travels in the URL hash (base64url JSON), so it never reaches a server.
    Shape: { n:"000001", t:"2026-11-20T21:54:00+07:00", name, phone, addr,
-            items:[[name, partNumber, rate, qty]], fee:number|null, pay:"transfer"|"cod", paid:true } */
+            items:[[name, partNumber, price, qty, salePrice?]], disc?:number (extra discount $),
+            fee:number|null, pay:"transfer"|"cod", paid:true } */
 const SHOP = { name: "MY-Shop", desc: "Survey equipment & Garmin watches", phone: "+855 17 303 337 · +855 12 859 788" };
 const app = document.getElementById("app");
 const h = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
@@ -63,7 +68,7 @@ if (!d || !Array.isArray(d.items)){
   const when = d.t ? new Date(d.t) : new Date();
   const r = h("div", "receipt");
   const top = h("div", "c");
-  top.append(h("div", "shop", SHOP.name), h("div", "desc", SHOP.desc), h("div", "title", "INVOICE"));
+  top.append(h("div", "shop", SHOP.name), h("div", "desc", SHOP.desc), h("div", "title", "E-INVOICE"));
   const meta = h("div", "meta");
   meta.append(
     h("div", "", "Invoice Number: #" + String(d.n || "").padStart(6, "0")),
@@ -78,13 +83,14 @@ if (!d || !Array.isArray(d.items)){
   if (cust.children.length){ r.appendChild(h("hr", "dash")); r.appendChild(cust); }
 
   const t = h("table"), hr = h("tr");
-  hr.append(h("th", "", "Product"), h("th", "n", "Rate"), h("th", "q", "QTY"), h("th", "n", "Amount"));
+  hr.append(h("th", "", "Product"), h("th", "n", "Price"), h("th", "q", "QTY"), h("th", "n", "Amount"));
   const thead = h("thead"); thead.appendChild(hr); t.appendChild(thead);
   const tb = h("tbody"); const sepRow = () => { const s = h("tr", "sep"), c = h("td"); c.colSpan = 4; c.appendChild(h("hr")); s.appendChild(c); return s; };
   tb.appendChild(sepRow());
-  let sub = 0;
-  d.items.forEach(([name, pn, rate, qty], i) => {
+  let sub = 0, itemDisc = 0;
+  d.items.forEach(([name, pn, rate, qty, sale], i) => {
     const amt = Number(rate) * Number(qty); sub += amt;
+    if (typeof sale === "number" && sale < rate) itemDisc += (rate - sale) * Number(qty);
     const a = h("tr", "item"), nc = h("td", "iname"); nc.colSpan = 4; nc.textContent = (i + 1) + "." + name;
     if (pn) nc.appendChild(h("span", "pn", "P/N " + pn));
     a.appendChild(nc); tb.appendChild(a);
@@ -94,12 +100,14 @@ if (!d || !Array.isArray(d.items)){
   t.appendChild(tb); r.appendChild(t);
 
   const fee = typeof d.fee === "number" ? d.fee : 0;
+  const disc = Math.round((itemDisc + (Number(d.disc) || 0)) * 100) / 100;
   const sums = h("div");
   const line = (k, v, cls) => { const x = h("div", "sum" + (cls ? " " + cls : "")); x.append(h("span", "", k), h("span", "", v)); sums.appendChild(x); };
   line("Subtotal", "$" + fmt(sub));
+  line("Discount", disc ? "−$" + fmt(disc) : "$0.00", "disc");
   line("Delivery", typeof d.fee === "number" ? "$" + fmt(fee) : "—");
   sums.appendChild(h("hr", "dash"));
-  line("Total", "$" + fmt(sub + fee), "total");
+  line("Total", "$" + fmt(sub - disc + fee), "total");
   sums.appendChild(h("hr", "dash"));
   r.appendChild(sums);
 
