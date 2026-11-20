@@ -1,7 +1,7 @@
 let pay = null, loc = null, zone = "pp", province = "";
 const PROVINCES = ["Banteay Meanchey","Battambang","Kampong Cham","Kampong Chhnang","Kampong Speu","Kampong Thom","Kampot","Kandal","Kep","Koh Kong","Kratie","Mondulkiri","Oddar Meanchey","Pailin","Preah Sihanouk","Preah Vihear","Prey Veng","Pursat","Ratanakiri","Siem Reap","Stung Treng","Svay Rieng","Takeo","Tbong Khmum"];
 const delFee = () => { const d = shop.delivery || {}; const f = zone === "pp" ? d.phnomPenhFee : (d.provinceFees || {})[province]; return typeof f === "number" ? f : null; };
-const deliveryTag = () => zone === "pp" ? "Phnom Penh" : "Province: " + (province || "?");
+const deliveryTag = () => zone === "pp" ? "Phnom Penh" : (province ? "Province: " + province : "Province");
 function renderDelivery(){
 const box = $("delList"); box.textContent = "";
 const opts = [["pp", "🏙️", "Phnom Penh", "Delivery inside Phnom Penh"], ["prov", "🚚", "Province", "Fee depends on the province"]];
