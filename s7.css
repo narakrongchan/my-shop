@@ -34,3 +34,5 @@ a.kitem:active{background:#f3f3f3}
 .ki-pin{background:linear-gradient(135deg,#ea4335,#c5221f)}
 .ki-info{background:linear-gradient(135deg,#8e8e93,#636366)}
 .kval{overflow-wrap:normal;word-break:break-word}
+.kitem:not(.wide) .kval{font-size:12.5px}
+.kitem:not(.wide) .klabel{font-size:10px}

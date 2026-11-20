@@ -18,7 +18,7 @@ function renderContactCard(){
 document.querySelectorAll(".cinfo, #companyInfo").forEach(n => n.remove());
 const c = shop.company; if (!c) return;
 const items = [];
-for (const p of phonesOf(c)) items.push(["phone", p.label ? "Call · " + p.label : "Call us", p.number, telHref(p.number)]);
+for (const p of phonesOf(c)) items.push(["phone", p.label || "Call us", p.number, telHref(p.number)]);
 for (const t of tgsOf(c)) items.push(["tg", t.label ? "Telegram · " + t.label : "Telegram", "@" + tgUser(t), "https://t.me/" + tgUser(t)]);
 for (const f of fbsOf(c)) items.push(["fb", f.label ? "Facebook · " + f.label : "Facebook", "Visit our page", f.url]);
 const tt = (c.tiktok || "").trim();
