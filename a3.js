@@ -29,6 +29,7 @@ const info = el("div", "pinfo");
 if (p.brand) info.appendChild(el("div", "brand", p.brand));
 info.appendChild(el("h2", "pname", p.name));
 const pr = priceTag(p); pr.classList.add("pbox"); info.appendChild(pr);
+if (isUsed(p)) info.appendChild(el("div", "pcond", "♻️ Second hand · " + p.condition));
 if (p.description) info.appendChild(el("p", "pdesc", p.description));
 for (const k of optNames(p)){
 const g = el("div", "opt"); g.appendChild(el("div", "optlabel", k));
