@@ -4,7 +4,7 @@
 .kitem{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fff;color:#111;text-decoration:none;min-width:0}
 .kitem.wide{grid-column:1/-1}
 a.kitem:active{background:#f3f3f3}
-.kicon{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#111;color:#fff}
+.kicon{flex:none;width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:#111;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.15)}
 .ktxt{display:flex;flex-direction:column;min-width:0;line-height:1.25}
 .klabel{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#6b6b6b}
 .kval{font-size:13.5px;font-weight:600;overflow-wrap:anywhere}
@@ -26,3 +26,11 @@ a.kitem:active{background:#f3f3f3}
 .chip.used[aria-pressed="true"]{background:#2e7d32;color:#fff;border-color:#2e7d32}
 .usedtag{position:absolute;top:8px;left:8px;font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;background:#2e7d32;color:#fff}
 .pcond{display:inline-block;margin:8px 0 2px;padding:4px 10px;border-radius:6px;background:#e8f5e9;color:#2e7d32;font-size:13px;font-weight:600}
+.ki-phone{background:linear-gradient(135deg,#34c759,#1f9d45)}
+.ki-tg{background:linear-gradient(135deg,#37aee2,#1e96c8)}
+.ki-fb{background:linear-gradient(135deg,#1877f2,#0b5fd6)}
+.ki-tiktok{background:#000}.ki-tiktok svg{filter:drop-shadow(-1.2px -1.2px 0 #25f4ee) drop-shadow(1.2px 1.2px 0 #fe2c55)}
+.ki-clock{background:linear-gradient(135deg,#ffb020,#f08a00)}
+.ki-pin{background:linear-gradient(135deg,#ea4335,#c5221f)}
+.ki-info{background:linear-gradient(135deg,#8e8e93,#636366)}
+.kval{overflow-wrap:normal;word-break:break-word}
