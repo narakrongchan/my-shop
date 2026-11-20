@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<title>Invoice · MY-Shop</title>
+<title>Invoice · NP-Shop</title>
 <style>
 :root{--ink:#111;--muted:#555;--line:#9a9a9a}
 *{box-sizing:border-box}
@@ -51,7 +51,7 @@ th.q,td.q{text-align:center;width:36px}
    Shape: { n:"000001", t:"2026-11-20T21:54:00+07:00", name, phone, addr,
             items:[[name, partNumber, price, qty, salePrice?]], disc?:number (extra discount $),
             fee:number|null, pay:"transfer"|"cod", paid:true } */
-const SHOP = { name: "MY-Shop", desc: "Survey equipment & Garmin watches", phone: "+855 17 303 337 · +855 12 859 788" };
+const SHOP = { name: "NP-Shop", desc: "Survey equipment & Garmin watches", phone: "+855 17 303 337 · +855 12 859 788" };
 const app = document.getElementById("app");
 const h = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 const fmt = n => Number(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
