@@ -36,3 +36,4 @@ a.kitem:active{background:#f3f3f3}
 .kval{overflow-wrap:normal;word-break:break-word}
 .kitem:not(.wide) .kval{font-size:12.5px}
 .kitem:not(.wide) .klabel{font-size:10px}
+.psku{margin:10px 0 2px;font-size:12.5px;color:#6b6b6b;font-variant-numeric:tabular-nums}

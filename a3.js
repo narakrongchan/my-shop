@@ -42,6 +42,11 @@ row.appendChild(b);
 }
 g.appendChild(row); info.appendChild(g);
 }
+const sku = skuFor(p, chosen);
+if (sku) info.appendChild(el("div", "psku", "Part Number: " + sku));
+else if (p.variants && p.variants.length > 1) info.appendChild(el("div", "psku", "Choose an option to see the part number"));
+const vv = variantFor(p, chosen), vi = vv && vv.image ? imgs.indexOf(vv.image) : -1;
+if (vi > 0) requestAnimationFrame(() => { track.scrollLeft = vi * track.clientWidth; });
 if (!p.inStock) info.appendChild(el("div", "sold", "Sold out"));
 const err = el("p", "err"); err.id = "optErr"; err.hidden = true; info.appendChild(err);
 box.appendChild(info);

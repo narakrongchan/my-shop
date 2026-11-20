@@ -8,6 +8,8 @@ const phonesOf = c => Array.isArray(c.phones) && c.phones.length ? c.phones : (c
 const tgsOf = c => Array.isArray(c.telegrams) && c.telegrams.length ? c.telegrams : (c.telegram ? [{ username: c.telegram }] : []);
 const tgUser = t => String(t.username || t).trim().replace(/^https?:\/\/t\.me\//, "").replace(/^@/, "").split(/[/?]/)[0];
 const fbsOf = c => Array.isArray(c.facebooks) && c.facebooks.length ? c.facebooks : (c.facebook ? [{ url: c.facebook }] : []);
+const variantFor = (p, o) => (p.variants || []).find(v => Object.entries(v.opts || {}).every(([k, x]) => (o || {})[k] === x));
+const skuFor = (p, o) => { const v = variantFor(p, o); return v ? v.sku : (p.variants && p.variants.length > 1 ? "" : (p.sku || (p.variants && p.variants[0] && p.variants[0].sku) || "")); };
 const telHref = n => "tel:" + n.replace(/[^\d+]/g, "");
 let shop = null, cat = "All", sub = "All", brand = "All", view = "catalog", current = null, chosen = {};
 const cart = {}; // key -> { id, qty, opts }

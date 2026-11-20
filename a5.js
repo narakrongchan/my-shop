@@ -8,6 +8,7 @@ const p = product(l.id), u = unitPrice(p);
 const row = el("div", "line"), t = el("div", "t");
 t.appendChild(el("div", "lname", p.name));
 const o = optText(l.opts); if (o) t.appendChild(el("small", "", o));
+const sk = skuFor(p, l.opts); if (sk) t.appendChild(el("small", "", "Part No. " + sk));
 t.appendChild(el("small", "", "(" + money(u) + ") x " + l.qty));
 const right = el("div", "lr");
 const del = el("button", "trash", "🗑"); del.type = "button"; del.setAttribute("aria-label", "Remove " + p.name);
