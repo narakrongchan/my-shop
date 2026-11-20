@@ -22,7 +22,7 @@ h1.append(logo, txt);
 const rows = [];
 for (const p of phonesOf(c)) rows.push(["📞", (p.label ? p.label + ": " : "") + p.number, telHref(p.number)]);
 for (const t of tgsOf(c)) rows.push(["💬", (t.label ? t.label + ": " : "") + "@" + tgUser(t), "https://t.me/" + tgUser(t)]);
-if (c.facebook) rows.push(["👍", "Facebook", c.facebook]);
+for (const f of fbsOf(c)) rows.push(["👍", "Facebook" + (f.label ? ": " + f.label : ""), f.url]);
 if (c.address) rows.push(["📍", c.address, c.map || ""]);
 if (c.hours) rows.push(["🕘", c.hours, ""]);
 if (c.about) rows.push(["ℹ️", c.about, ""]);

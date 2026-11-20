@@ -7,6 +7,7 @@ const $ = id => document.getElementById(id);
 const phonesOf = c => Array.isArray(c.phones) && c.phones.length ? c.phones : (c.phone ? [{ number: c.phone }] : []);
 const tgsOf = c => Array.isArray(c.telegrams) && c.telegrams.length ? c.telegrams : (c.telegram ? [{ username: c.telegram }] : []);
 const tgUser = t => String(t.username || t).trim().replace(/^https?:\/\/t\.me\//, "").replace(/^@/, "").split(/[/?]/)[0];
+const fbsOf = c => Array.isArray(c.facebooks) && c.facebooks.length ? c.facebooks : (c.facebook ? [{ url: c.facebook }] : []);
 const telHref = n => "tel:" + n.replace(/[^\d+]/g, "");
 let shop = null, cat = "All", sub = "All", brand = "All", view = "catalog", current = null, chosen = {};
 const cart = {}; // key -> { id, qty, opts }

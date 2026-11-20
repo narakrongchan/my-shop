@@ -20,7 +20,7 @@ const c = shop.company; if (!c) return;
 const items = [];
 for (const p of phonesOf(c)) items.push(["phone", p.label ? "Call · " + p.label : "Call us", p.number, telHref(p.number)]);
 for (const t of tgsOf(c)) items.push(["tg", t.label ? "Telegram · " + t.label : "Telegram", "@" + tgUser(t), "https://t.me/" + tgUser(t)]);
-if (c.facebook) items.push(["fb", "Facebook", "Visit our page", c.facebook]);
+for (const f of fbsOf(c)) items.push(["fb", f.label ? "Facebook · " + f.label : "Facebook", "Visit our page", f.url]);
 const tt = (c.tiktok || "").trim();
 if (tt){ const ttName = tt.replace(/^https?:\/\/(www\.)?tiktok\.com\//, "").replace(/^@/, "").split(/[/?]/)[0]; items.push(["tiktok", "TikTok", "@" + ttName, "https://www.tiktok.com/@" + ttName]); }
 if (c.hours) items.push(["clock", "Opening hours", c.hours, ""]);
